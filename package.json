@@ -1,0 +1,32 @@
+{
+  "name": "excel-corse",
+  "version": "1.0.0",
+  "description": "Pure JavaScript Excel Application",
+  "keywords": [
+    "js",
+    "javascript",
+    "excel"
+  ],
+  "homepage": "https://github.com/Anasteishahm/Excel-corse#readme",
+  "private": "true",
+  "bugs": {
+    "url": "https://github.com/Anasteishahm/Excel-corse/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anasteishahm/Excel-corse.git"
+  },
+  "license": "ISC",
+  "author": "Anastasiia Sydorovska <nastenkahm@gmail.com>",
+  "type": "commonjs",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack",
+    "build": "webpack --mode production"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  }
+}
