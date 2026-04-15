@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Excel-corse.iml" filepath="$PROJECT_DIR$/Excel-corse.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Excel-corse.iml" filepath="$PROJECT_DIR$/.idea/Excel-corse.iml" />
     </modules>
   </component>
 </project>
