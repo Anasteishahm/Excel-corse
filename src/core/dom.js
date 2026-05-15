@@ -1,6 +1,5 @@
 class Dom {
   constructor(selector) {
-    // #app
     this.$el = typeof selector === 'string' ?
 	document.querySelector(selector) :
 	selector;
@@ -22,6 +21,10 @@ class Dom {
     this.$el.addEventListener(eventType, callback);
   }
 
+  off(eventType, callback) {
+    this.$el.removeEventListener(eventType, callback);
+  }
+
   append(node) {
     if (node instanceof Dom) {
       node = node.$el;
@@ -31,7 +34,7 @@ class Dom {
     } else {
       this.$el.appendChild(node);
     }
-    return this
+    return this;
   }
 }
 
