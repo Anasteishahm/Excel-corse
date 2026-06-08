@@ -2,7 +2,7 @@ import {ExcelComponent} from '@core/ExcelComponent';
 import {$} from '@core/dom';
 import {createTable} from '@/components/table/table.template';
 import {resizeHandler} from '@/components/table/table.resize';
-import {isCell, shouldResize} from '@/components/table/table.functions';
+import {isCell, matrix, shouldResize} from '@/components/table/table.functions';
 import {TableSelection} from '@/components/table/TableSelection';
 
 export class Table extends ExcelComponent {
@@ -10,7 +10,7 @@ export class Table extends ExcelComponent {
 
   constructor($root) {
     super($root, {
-      listeners: ['mousedown'],
+      listeners: ['mousedown', 'keydown'],
     });
   }
 
@@ -35,31 +35,55 @@ export class Table extends ExcelComponent {
     } else if (isCell(event)) {
       const $target = $(event.target);
       if (event.shiftKey) {
-        const target = $target.id(true);
-        const current = this.selection.current.id(true);
-
-        const cols = range(current.col, target.col);
-        const rows = range(current.row, target.row);
-
-        const ids = cols.reduce((acc, col) => {
-          rows.forEach(row => acc.push(`${row}:${col}`))
-          return acc
-        }, []);
-
-        const $cells = ids.map(id => this.$root.find(`[data-id="${id}"]`))
-        this.selection.selectGroup($cells)
+        const $cells = matrix($target, this.selection.current)
+            .map((id) => this.$root.find(`[data-id="${id}"]`));
+        this.selection.selectGroup($cells);
       } else {
         this.selection.select($target);
       }
     }
   }
+
+  onKeydown(event) {
+    const keys = [
+      'Enter',
+      'Tab',
+      'ArrowLeft',
+      'ArrowRight',
+      'ArrowDown',
+      'ArrowUp',
+    ];
+
+    const {key} = event;
+
+    if (keys.includes(key)) {
+      event.preventDefault();
+      const id = this.selection.current.id(true);
+
+      const $next = this.$root.find(nextSelector(key, id));
+      this.selection.select($next);
+    }
+  }
 }
 
-function range(start, end) {
-  if (start > end) {
-    [end, start] = [start, end];
+function nextSelector(key, {col, row}) {
+  switch (key) {
+    case 'Enter':
+    case 'ArrowDown':
+      row++
+      break;
+    case 'Tab':
+    case 'ArrowRight':
+      col++
+      break;
+    case 'ArrowLeft':
+      col--
+      break;
+    case 'ArrowUp':
+      row--
+      break;
   }
-  return new Array(end - start + 1)
-      .fill('')
-      .map((_, index) => start + index);
+
+  return `[data-id="${row}:${col}"]`
 }
+
