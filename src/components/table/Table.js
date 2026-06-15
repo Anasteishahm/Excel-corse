@@ -10,9 +10,9 @@ export class Table extends ExcelComponent {
 
   constructor($root, options) {
     super($root, {
-      name: 'Table'
+      name: 'Table',
       listeners: ['mousedown', 'keydown'],
-      ...options
+      ...options,
     });
   }
 
@@ -29,6 +29,10 @@ export class Table extends ExcelComponent {
 
     const $cell = this.$root.find('[data-id="0:0"]');
     this.selection.select($cell);
+
+    this.$on('formula:input', (text) => {
+      this.selection.current.text(text);
+    });
   }
 
   onMousedown(event) {

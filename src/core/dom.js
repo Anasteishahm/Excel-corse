@@ -1,15 +1,20 @@
 class Dom {
   constructor(selector) {
     this.$el = typeof selector === 'string' ?
-	document.querySelector(selector) :
-	selector;
+        document.querySelector(selector) :
+        selector;
   }
+
   html(html) {
     if (typeof html === 'string') {
       this.$el.innerHTML = html;
       return this;
     }
     return this.$el.outerHTML.trim();
+  }
+
+  text(text) {
+    this.$el.textContent = text;
   }
 
   clear() {
@@ -67,18 +72,18 @@ class Dom {
 
   id(parse) {
     if (parse) {
-      const parsed = this.id().split(':')
+      const parsed = this.id().split(':');
       return {
         row: +parsed[0],
-        col: +parsed[1]
-      }
+        col: +parsed[1],
+      };
     }
     return this.data.id;
   }
 
   focus() {
-    this.$el.focus()
-    return this
+    this.$el.focus();
+    return this;
   }
 
   addClass(className) {
