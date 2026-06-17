@@ -5,6 +5,7 @@ export class ExcelComponent extends DomListener {
     super($root, options.listeners);
     this.name = options.name || '';
     this.emitter = options.emitter;
+    this.store = options.store;
     this.unsubscribers = [];
 
     this.prepare();
@@ -28,6 +29,8 @@ export class ExcelComponent extends DomListener {
     const unsub = this.emitter.subscribe(event, fn);
     this.unsubscribers.push(unsub);
   }
+
+  
 
   // Ініціалізуємо компонент
   // Додаємо ДОМ слухачів
